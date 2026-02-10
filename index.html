@@ -71,7 +71,10 @@ html, body {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+    width: 320px;
+    height: 260px;
 }
+
 
 /* buttons */
 button {
@@ -202,12 +205,23 @@ setInterval(()=>{
 
 /* SAFE NO movement */
 noBtn.onclick = () => {
-    const x = Math.random()*(innerWidth-100);
-    const y = Math.random()*(innerHeight-80);
-    noBtn.style.left=x+"px";
-    noBtn.style.top=y+"px";
-    message.textContent="hihi tumi aamar oi valentine monaa bhodrotar khatir jigaitasi chup chaap yess tipo paknami nah 😜";
+
+    const box = document.querySelector(".container");
+    const boxRect = box.getBoundingClientRect();
+
+    const btnW = noBtn.offsetWidth;
+    const btnH = noBtn.offsetHeight;
+
+    const x = Math.random() * (boxRect.width - btnW);
+    const y = Math.random() * (boxRect.height - btnH);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    message.textContent =
+    "hihi tumi aamar oi valentine monaa bhodrotar khatir jigaitasi chup chaap yess tipo paknami nah 😜";
 };
+
 
 /* heart rain */
 function globalHeartRain(){
@@ -294,4 +308,5 @@ anim();
 
 </body>
 </html>
+
 
