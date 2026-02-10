@@ -6,21 +6,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-
 html, body {
     margin: 0;
-    height: 100%;
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg,#ffc0cb,#ffd6e8) fixed;
-    overflow: hidden;
+    background: linear-gradient(135deg,#ffc0cb,#ffd6e8);
+    overflow-x: hidden;
     text-align: center;
-}
-
-
-/* blur */
-.blur {
-    filter: blur(8px);
-    transition: 1s;
 }
 
 /* start screen */
@@ -31,7 +22,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
+    font-size: 22px;
     color: white;
     z-index: 10;
 }
@@ -45,36 +36,17 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 28px;
+    padding: 20px;
+    font-size: 22px;
     color: #ff1493;
     z-index: 9;
 }
 
-/* floating background hearts */
-.bgHeart {
-    position: fixed;
-    bottom: -20px;
-    font-size: 20px;
-    animation: floatUp 6s linear forwards;
-    z-index: 1;
-}
-
-@keyframes floatUp {
-    to { transform: translateY(-110vh); opacity: 0; }
-}
-
-/* main content */
-#mainContent {
-    position: fixed;
-    inset: 0;
-    z-index: 5;
-}
-
+/* main layout */
 .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    padding: 80px 20px 40px;
+    max-width: 420px;
+    margin: auto;
 }
 
 /* buttons */
@@ -88,50 +60,53 @@ button {
 }
 
 #yesBtn { background:#ff69b4;color:white; }
-#noBtn { background:#ffb6c1;position:absolute; }
+#noBtn { background:#ffb6c1; position:fixed; }
 
 #openBtn {
-    display:none;
+    display: none;
     background:#ff85c1;
     color:white;
-    position:fixed;
-    right:20px;
-    bottom:40%;
-    z-index:6;
-}
-
-/* explosion */
-.blast {
-    animation: explode .6s forwards;
-}
-
-@keyframes explode {
-    100% { transform:scale(0); opacity:0; }
+    margin-top: 15px;
 }
 
 /* slideshow */
-.slideshow { display:none;margin-top:15px; }
+.slideshow {
+    display:none;
+    margin-top:15px;
+}
 
 .slideshow img {
-    width:200px;
-    height:200px;
-    border-radius:15px;
-    object-fit:cover;
+    width: 85%;
+    max-width: 260px;
+    border-radius: 15px;
+}
+
+/* floating hearts */
+.bgHeart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp 6s linear forwards;
+    z-index: 1;
+}
+
+@keyframes floatUp {
+    to { transform: translateY(-110vh); opacity: 0; }
 }
 
 /* heart rain */
 .rainHeart {
-    position:fixed;
-    font-size:26px;
-    animation:rain 3s linear forwards;
-    z-index:6;
+    position: fixed;
+    font-size: 26px;
+    animation: rain 3s linear forwards;
+    z-index: 6;
 }
 
 @keyframes rain {
     to { transform:translateY(110vh); opacity:0; }
 }
 
-/* fireworks canvas */
+/* fireworks */
 canvas {
     position: fixed;
     inset: 0;
@@ -146,7 +121,7 @@ canvas {
 <div id="startScreen">Tipe tipe aamader prem kahini shuru koro Pechiiii 💕</div>
 
 <div id="proposalScreen">
-💍Jokes Apart Bby!!! You are my Forever Valentine Baby💖maaf karna baby paise kam hai lekin pura site tere liye khud design kiya hai, instagram me dekha tha logo ko apne girlfriend ko bhejte huye dusre ka link leke to socha kyu na misti momo ke liye Ayu khud hi mehnat se banale👀❤️
+💍 Jokes Apart Baby — You are my Forever Valentine 💖  
 <button onclick="voice.play()">Replay Voice ▶️</button>
 </div>
 
@@ -155,9 +130,6 @@ canvas {
 
 <canvas id="fireworks"></canvas>
 
-
-
-<div id="mainContent">
 <div class="container">
 
 <h2>Will you be my Valentine? 💖</h2>
@@ -171,14 +143,13 @@ canvas {
 <img id="slide" src="photo1.jpeg">
 </div>
 
+<button id="openBtn">Khule daao aamake 💌</button>
+
 </div>
-</div>
-    <button id="openBtn">Khule daao aamake 💌</button>
 
 <script>
 const startScreen = document.getElementById("startScreen");
 const proposalScreen = document.getElementById("proposalScreen");
-const mainContent = document.getElementById("mainContent");
 const music = document.getElementById("music");
 const voice = document.getElementById("voice");
 const yesBtn = document.getElementById("yesBtn");
@@ -187,14 +158,13 @@ const openBtn = document.getElementById("openBtn");
 const message = document.getElementById("message");
 const slide = document.getElementById("slide");
 
-/* fullscreen start */
+/* start */
 startScreen.onclick = () => {
     music.play();
     startScreen.style.display = "none";
-    document.documentElement.requestFullscreen?.().catch(()=>{});
 };
 
-/* floating hearts loop */
+/* floating hearts */
 setInterval(()=>{
     const h=document.createElement("div");
     h.className="bgHeart";
@@ -204,13 +174,16 @@ setInterval(()=>{
     setTimeout(()=>h.remove(),6000);
 },400);
 
-/* SAFE NO movement */
+/* NO button safe movement */
 noBtn.onclick = () => {
-    const x = Math.random()*(innerWidth-100);
-    const y = Math.random()*(innerHeight-80);
+    const padding = 20;
+    const x = Math.random()*(innerWidth-noBtn.offsetWidth-padding);
+    const y = Math.random()*(innerHeight-noBtn.offsetHeight-padding);
     noBtn.style.left=x+"px";
     noBtn.style.top=y+"px";
-    message.textContent="hihi tumi aamar oi valentine monaa bhodrotar khatir jigaitasi chup chaap yess tipo paknami nah 😜";
+
+    message.textContent =
+    "chup chaap yess tipo paknami nah 😜";
 };
 
 /* heart rain */
@@ -231,28 +204,25 @@ setTimeout(()=>clearInterval(i),4000);
 /* YES */
 yesBtn.onclick=()=>{
 noBtn.style.display="none";
-yesBtn.classList.add("blast");
+yesBtn.style.display="none";
 globalHeartRain();
 
-setTimeout(()=>{
-yesBtn.style.display="none";
-message.textContent="️Supperr Baby now officially i am eligible to do some shit like tumar gude aamar dhon bhorte paari";
+message.textContent="Congrats baby ❤️";
+
 document.querySelector(".slideshow").style.display="block";
 openBtn.style.display="block";
+
 startFireworks();
 startSlideshow();
-},700);
 };
 
-/* OPEN ME */
+/* open */
 openBtn.onclick=()=>{
-mainContent.classList.add("blur");
 globalHeartRain();
-
 setTimeout(()=>{
 proposalScreen.style.display="flex";
 voice.play();
-},1500);
+},1200);
 };
 
 /* slideshow */
@@ -276,7 +246,7 @@ function startFireworks(){
 setInterval(()=>{
 let x=Math.random()*canvas.width;
 let y=Math.random()*canvas.height/2;
-for(let i=0;i<40;i++)
+for(let i=0;i<30;i++)
 p.push({x,y,dx:(Math.random()-0.5)*6,dy:(Math.random()-0.5)*6,l:60});
 },800);
 }
@@ -298,5 +268,3 @@ anim();
 
 </body>
 </html>
-
-
