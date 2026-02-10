@@ -9,7 +9,8 @@ html, body {
     height: 100%;
     font-family: "Comic Sans MS", cursive;
     background: linear-gradient(135deg,#ffc0cb,#ffd6e8) fixed;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     text-align: center;
 }
 
@@ -60,19 +61,21 @@ html, body {
 }
 
 /* main content */
+/* main content */
 #mainContent {
     position: fixed;
     inset: 0;
     z-index: 5;
+    display: flex;
+    justify-content: center;
 }
 
+
+
 .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 320px;
-    height: 260px;
+    padding: 40px 20px;
+    max-width: 400px;
+    margin: auto;
 }
 
 
@@ -304,6 +307,7 @@ anim();
 
 </body>
 </html>
+
 
 
 
