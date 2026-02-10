@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html, body {
+    margin: 0;
+    height: 100%;
+    font-family: "Comic Sans MS", cursive;
+    background: linear-gradient(135deg,#ffc0cb,#ffd6e8) fixed;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* blur */
+.blur {
+    filter: blur(8px);
+    transition: 1s;
+}
+
+/* start screen */
+#startScreen {
+    position: fixed;
+    inset: 0;
+    background: #ffc0cb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: white;
+    z-index: 10;
+}
+
+/* ending screen */
+#proposalScreen {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,192,203,0.95);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    color: #ff1493;
+    z-index: 9;
+}
+
+/* floating background hearts */
+.bgHeart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp 6s linear forwards;
+    z-index: 1;
+}
+
+@keyframes floatUp {
+    to { transform: translateY(-110vh); opacity: 0; }
+}
+
+/* main content */
+#mainContent {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+/* buttons */
+button {
+    padding: 12px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+#yesBtn { background:#ff69b4;color:white; }
+#noBtn { background:#ffb6c1;position:absolute; }
+
+#openBtn {
+    display:none;
+    background:#ff85c1;
+    color:white;
+    position:fixed;
+    right:20px;
+    bottom:40%;
+    z-index:6;
+}
+
+/* explosion */
+.blast {
+    animation: explode .6s forwards;
+}
+
+@keyframes explode {
+    100% { transform:scale(0); opacity:0; }
+}
+
+/* slideshow */
+.slideshow { display:none;margin-top:15px; }
+
+.slideshow img {
+    width:200px;
+    height:200px;
+    border-radius:15px;
+    object-fit:cover;
+}
+
+/* heart rain */
+.rainHeart {
+    position:fixed;
+    font-size:26px;
+    animation:rain 3s linear forwards;
+    z-index:6;
+}
+
+@keyframes rain {
+    to { transform:translateY(110vh); opacity:0; }
+}
+
+/* fireworks canvas */
+canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+</style>
+</head>
+
+<body>
+
+<div id="startScreen">Tipe tipe aamader prem kahini shuru koro Pechiiii 💕</div>
+
+<div id="proposalScreen">
+💍Jokes Apart Bby!!! You are my Forever Valentine Baby💖maaf karna baby paise kam hai lekin pura site tere liye khud design kiya hai, instagram me dekha tha logo ko apne girlfriend ko bhejte huye dusre ka link leke to socha kyu na misti momo ke liye Ayu khud hi mehnat se banale👀❤️
+<button onclick="voice.play()">Replay Voice ▶️</button>
+</div>
+
+<audio id="music" loop src="music.mp3"></audio>
+<audio id="voice" src="voice.mp3"></audio>
+
+<canvas id="fireworks"></canvas>
+
+<button id="openBtn">Khule daao aamake 💌</button>
+
+<div id="mainContent">
+<div class="container">
+
+<h2>Will you be my Valentine? 💖</h2>
+
+<button id="yesBtn">Yes</button>
+<button id="noBtn">No</button>
+
+<div id="message"></div>
+
+<div class="slideshow">
+<img id="slide" src="photo1.jpeg">
+</div>
+
+</div>
+</div>
+
+<script>
+const startScreen = document.getElementById("startScreen");
+const proposalScreen = document.getElementById("proposalScreen");
+const mainContent = document.getElementById("mainContent");
+const music = document.getElementById("music");
+const voice = document.getElementById("voice");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const openBtn = document.getElementById("openBtn");
+const message = document.getElementById("message");
+const slide = document.getElementById("slide");
+
+/* fullscreen start */
+startScreen.onclick = () => {
+    music.play();
+    startScreen.style.display = "none";
+    document.documentElement.requestFullscreen?.().catch(()=>{});
+};
+
+/* floating hearts loop */
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="bgHeart";
+    h.innerHTML="💗";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+},400);
+
+/* SAFE NO movement */
+noBtn.onclick = () => {
+    const x = Math.random()*(innerWidth-100);
+    const y = Math.random()*(innerHeight-80);
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
+    message.textContent="hihi tumi aamar oi valentine monaa bhodrotar khatir jigaitasi chup chaap yess tipo paknami nah 😜";
+};
+
+/* heart rain */
+function globalHeartRain(){
+let i=setInterval(()=>{
+for(let j=0;j<10;j++){
+let h=document.createElement("div");
+h.className="rainHeart";
+h.innerHTML="💖";
+h.style.left=Math.random()*innerWidth+"px";
+h.style.top="-20px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),3000);
+}},150);
+setTimeout(()=>clearInterval(i),4000);
+}
+
+/* YES */
+yesBtn.onclick=()=>{
+noBtn.style.display="none";
+yesBtn.classList.add("blast");
+globalHeartRain();
+
+setTimeout(()=>{
+yesBtn.style.display="none";
+message.textContent="️Supperr Baby now officially i am eligible to do some shit like tumar gude aamar dhon bhorte paari";
+document.querySelector(".slideshow").style.display="block";
+openBtn.style.display="block";
+startFireworks();
+startSlideshow();
+},700);
+};
+
+/* OPEN ME */
+openBtn.onclick=()=>{
+mainContent.classList.add("blur");
+globalHeartRain();
+
+setTimeout(()=>{
+proposalScreen.style.display="flex";
+voice.play();
+},1500);
+};
+
+/* slideshow */
+const photos=["photo1.jpeg","photo2.jpeg","photo3.jpeg"];
+let idx=0;
+function startSlideshow(){
+setInterval(()=>{
+idx=(idx+1)%photos.length;
+slide.src=photos[idx];
+},2000);
+}
+
+/* fireworks */
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+let p=[];
+function startFireworks(){
+setInterval(()=>{
+let x=Math.random()*canvas.width;
+let y=Math.random()*canvas.height/2;
+for(let i=0;i<40;i++)
+p.push({x,y,dx:(Math.random()-0.5)*6,dy:(Math.random()-0.5)*6,l:60});
+},800);
+}
+
+function anim(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+p.forEach(a=>{
+ctx.beginPath();
+ctx.arc(a.x,a.y,3,0,Math.PI*2);
+ctx.fillStyle="#ff69b4";
+ctx.fill();
+a.x+=a.dx;a.y+=a.dy;a.l--;
+});
+p=p.filter(a=>a.l>0);
+requestAnimationFrame(anim);
+}
+anim();
+</script>
+
+</body>
+</html>
