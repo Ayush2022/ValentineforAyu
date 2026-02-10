@@ -254,15 +254,16 @@ startSlideshow();
 };
 
 /* OPEN ME */
-openBtn.onclick=()=>{
-mainContent.classList.add("blur");
-globalHeartRain();
+openBtn.onclick = () => {
+    mainContent.classList.add("blur");
+    globalHeartRain();
 
-setTimeout(()=>{
-proposalScreen.style.display="flex";
-voice.play();
-},1500);
+    setTimeout(() => {
+        proposalScreen.style.display = "flex";
+        voice.play();
+    }, 1500);
 };
+
 
 /* slideshow */
 const photos=["photo1.jpeg","photo2.jpeg","photo3.jpeg"];
@@ -307,6 +308,7 @@ anim();
 
 </body>
 </html>
+
 
 
 
