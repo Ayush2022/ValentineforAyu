@@ -9,8 +9,7 @@ html, body {
     height: 100%;
     font-family: "Comic Sans MS", cursive;
     background: linear-gradient(135deg,#ffc0cb,#ffd6e8) fixed;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     text-align: center;
 }
 
@@ -61,23 +60,18 @@ html, body {
 }
 
 /* main content */
-/* main content */
 #mainContent {
     position: fixed;
     inset: 0;
     z-index: 5;
-    display: flex;
-    justify-content: center;
 }
-
-
 
 .container {
-    padding: 40px 20px;
-    max-width: 400px;
-    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
-
 
 /* buttons */
 button {
@@ -93,9 +87,13 @@ button {
 #noBtn { background:#ffb6c1;position:absolute; }
 
 #openBtn {
-    display: none;
-    background: #ff85c1;
-    color: white;
+    display:none;
+    background:#ff85c1;
+    color:white;
+    position:fixed;
+    right:20px;
+    bottom:40%;
+    z-index:6;
 }
 
 /* explosion */
@@ -111,13 +109,11 @@ button {
 .slideshow { display:none;margin-top:15px; }
 
 .slideshow img {
-    width: 200px;
-    height: 200px;
-    border-radius: 15px;
-    object-fit: cover;
-    pointer-events: none;
+    width:200px;
+    height:200px;
+    border-radius:15px;
+    object-fit:cover;
 }
-
 
 /* heart rain */
 .rainHeart {
@@ -136,7 +132,7 @@ canvas {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 0;
+    z-index: 2;
 }
 </style>
 </head>
@@ -155,7 +151,7 @@ canvas {
 
 <canvas id="fireworks"></canvas>
 
-    
+<button id="openBtn">Khule daao aamake 💌</button>
 
 <div id="mainContent">
 <div class="container">
@@ -171,10 +167,9 @@ canvas {
 <img id="slide" src="photo1.jpeg">
 </div>
 
+</div>
+</div>
 
-</div>
-</div>
-<button id="openBtn">Khule daao aamake 💌</button>
 <script>
 const startScreen = document.getElementById("startScreen");
 const proposalScreen = document.getElementById("proposalScreen");
@@ -206,23 +201,12 @@ setInterval(()=>{
 
 /* SAFE NO movement */
 noBtn.onclick = () => {
-
-    const box = document.querySelector(".container");
-    const boxRect = box.getBoundingClientRect();
-
-    const btnW = noBtn.offsetWidth;
-    const btnH = noBtn.offsetHeight;
-
-    const x = Math.random() * (boxRect.width - btnW);
-    const y = Math.random() * (boxRect.height - btnH);
-
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-
-    message.textContent =
-    "hihi tumi aamar oi valentine monaa bhodrotar khatir jigaitasi chup chaap yess tipo paknami nah 😜";
+    const x = Math.random()*(innerWidth-100);
+    const y = Math.random()*(innerHeight-80);
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
+    message.textContent="hihi tumi aamar oi valentine monaa bhodrotar khatir jigaitasi chup chaap yess tipo paknami nah 😜";
 };
-
 
 /* heart rain */
 function globalHeartRain(){
@@ -256,16 +240,15 @@ startSlideshow();
 };
 
 /* OPEN ME */
-openBtn.onclick = () => {
-    mainContent.classList.add("blur");
-    globalHeartRain();
+openBtn.onclick=()=>{
+mainContent.classList.add("blur");
+globalHeartRain();
 
-    setTimeout(() => {
-        proposalScreen.style.display = "flex";
-        voice.play();
-    }, 1500);
+setTimeout(()=>{
+proposalScreen.style.display="flex";
+voice.play();
+},1500);
 };
-
 
 /* slideshow */
 const photos=["photo1.jpeg","photo2.jpeg","photo3.jpeg"];
@@ -310,14 +293,3 @@ anim();
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
