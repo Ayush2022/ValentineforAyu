@@ -79,6 +79,12 @@ button {
     width: 85%;
     max-width: 260px;
     border-radius: 15px;
+    opacity: 1;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.fade-out {
+    opacity: 0;
 }
 
 /* floating hearts */
@@ -240,10 +246,18 @@ const photos=[
 let idx=0;
 function startSlideshow(){
 setInterval(()=>{
-idx=(idx+1)%photos.length;
-slide.src=photos[idx];
-},2000);
+
+    slide.classList.add("fade-out");
+
+    setTimeout(()=>{
+        idx=(idx+1)%photos.length;
+        slide.src=photos[idx];
+        slide.classList.remove("fade-out");
+    },400);
+
+},2500);
 }
+
 
 /* fireworks */
 const canvas=document.getElementById("fireworks");
@@ -278,4 +292,5 @@ anim();
 
 </body>
 </html>
+
 
