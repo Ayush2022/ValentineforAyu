@@ -223,13 +223,27 @@ startSlideshow();
 };
 
 /* open */
-openBtn.onclick=()=>{
-globalHeartRain();
-setTimeout(()=>{
-proposalScreen.style.display="flex";
-voice.play();
-},1200);
+openBtn.onclick = () => {
+
+    let fade = setInterval(() => {
+        if (music.volume > 0.05) {
+            music.volume -= 0.05;
+        } else {
+            music.pause();
+            music.currentTime = 0;
+            music.volume = 1;
+            clearInterval(fade);
+        }
+    }, 100);
+
+    globalHeartRain();
+
+    setTimeout(() => {
+        proposalScreen.style.display = "flex";
+        voice.play();
+    }, 1200);
 };
+
 
 /* slideshow */
 const photos=[
@@ -292,5 +306,6 @@ anim();
 
 </body>
 </html>
+
 
 
