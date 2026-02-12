@@ -34,19 +34,7 @@ html, body {
     z-index: 10;
 }
 
-const introText =
-"Ekdin… Ayu met Misti Momo 💕 And a cute love story began…";
 
-const typeEl = document.getElementById("typeText");
-let ti = 0;
-
-function typeWriter() {
-    if (ti < introText.length) {
-        typeEl.innerHTML += introText.charAt(ti);
-        ti++;
-        setTimeout(typeWriter, 50);
-    }
-}
 
 typeWriter();
 
@@ -258,6 +246,22 @@ const noBtn = document.getElementById("noBtn");
 const openBtn = document.getElementById("openBtn");
 const message = document.getElementById("message");
 const slide = document.getElementById("slide");
+    const introText =
+"Ekdin… Ayu met Misti Momo 💕 And a cute love story began…";
+
+const typeEl = document.getElementById("typeText");
+let ti = 0;
+
+function typeWriter() {
+    if (ti < introText.length) {
+        typeEl.innerHTML += introText.charAt(ti);
+        ti++;
+        setTimeout(typeWriter, 50);
+    }
+}
+
+typeWriter();
+
 
 /* start */
 let started = false;
@@ -345,7 +349,6 @@ openBtn.classList.add("slide-up");
 
 
         startFireworks();
-        startSlideshow();
 
     }, 600);
 };
@@ -387,7 +390,6 @@ const photos=[
 ];
 
 let idx=0;
-let idx = 0;
 
 function showPhoto(i) {
     slide.classList.add("fade-out");
@@ -474,6 +476,7 @@ anim();
 
 </body>
 </html>
+
 
 
 
