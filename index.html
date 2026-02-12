@@ -19,6 +19,14 @@ html, body {
 }
 
 
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+#proposalScreen {
+    z-index: 9999;
+}
 
     
 /* start screen */
@@ -370,10 +378,16 @@ openBtn.onclick = () => {
     globalHeartRain();
 
     setTimeout(() => {
+
+        document.querySelector(".container").style.display = "none";
+        document.getElementById("fireworks").style.display = "none";
+
         proposalScreen.style.display = "flex";
         proposalScreen.classList.add("zoom-in");
         voice.play();
-            }, 1200);
+
+    }, 1200);
+
 };
 
 
@@ -476,6 +490,7 @@ anim();
 
 </body>
 </html>
+
 
 
 
