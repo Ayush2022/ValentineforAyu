@@ -102,6 +102,48 @@ button {
         opacity: 0;
     }
 }
+    /* screen fade animation */
+.fade-screen {
+    animation: fadeScreen 0.8s ease forwards;
+}
+
+@keyframes fadeScreen {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* slide up reveal */
+.slide-up {
+    animation: slideUp 0.8s ease forwards;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* zoom reveal */
+.zoom-in {
+    animation: zoomIn 0.8s ease forwards;
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 
     
 /* floating hearts */
@@ -184,8 +226,14 @@ const slide = document.getElementById("slide");
 /* start */
 startScreen.onclick = () => {
     music.play();
-    startScreen.style.display = "none";
+    startScreen.classList.add("fade-screen");
+
+    setTimeout(() => {
+        startScreen.style.display = "none";
+        document.querySelector(".container").classList.add("slide-up");
+    }, 600);
 };
+
 
 /* floating hearts */
 setInterval(()=>{
@@ -240,8 +288,13 @@ yesBtn.onclick = () => {
 
         message.textContent = "Congrats baby❤️,akhon aami officially tumar gude aamar dhon bhorte paarbo as you accepted heeheee😍😍 ";
 
-        document.querySelector(".slideshow").style.display = "block";
-        openBtn.style.display = "block";
+const show = document.querySelector(".slideshow");
+show.style.display = "block";
+show.classList.add("slide-up");
+
+openBtn.style.display = "block";
+openBtn.classList.add("slide-up");
+
 
         startFireworks();
         startSlideshow();
@@ -267,8 +320,9 @@ openBtn.onclick = () => {
 
     setTimeout(() => {
         proposalScreen.style.display = "flex";
+        proposalScreen.classList.add("zoom-in");
         voice.play();
-    }, 1200);
+            }, 1200);
 };
 
 
@@ -333,6 +387,7 @@ anim();
 
 </body>
 </html>
+
 
 
 
