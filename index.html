@@ -186,7 +186,7 @@ canvas {
 <div id="startScreen">Tipe tipe aamader prem kahini shuru koro Pechiiii 💕</div>
 
 <div id="proposalScreen">
-💍 Jokes Apart Baby — You are my Forever Valentine,and I promise to be with you forever babyyy,meaaaaaow misti momoooo 💖  
+💍 Jokes Apart Baby — You are my Forever Valentine,and I promise to be with you forever babyyy,   meaaaaaow misti momoooo 💖  
 <button onclick="voice.play()">Replay Voice ▶️</button>
 </div>
 
@@ -224,15 +224,27 @@ const message = document.getElementById("message");
 const slide = document.getElementById("slide");
 
 /* start */
+let started = false;
+
 startScreen.onclick = () => {
+
+    if (started) return; // prevent double tap bug
+    started = true;
+
     music.play();
-    startScreen.classList.add("fade-screen");
+
+    startScreen.style.pointerEvents = "none";
+    startScreen.style.opacity = "1";
+
+    startScreen.style.transition = "opacity 0.8s ease";
+    startScreen.style.opacity = "0";
 
     setTimeout(() => {
         startScreen.style.display = "none";
         document.querySelector(".container").classList.add("slide-up");
-    }, 600);
+    }, 800);
 };
+
 
 
 /* floating hearts */
@@ -387,6 +399,7 @@ anim();
 
 </body>
 </html>
+
 
 
 
