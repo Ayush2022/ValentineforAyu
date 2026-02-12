@@ -19,6 +19,8 @@ html, body {
 }
 
 
+
+    
 /* start screen */
 #startScreen {
     position: fixed;
@@ -32,6 +34,23 @@ html, body {
     z-index: 10;
 }
 
+const introText =
+"Ekdin… Ayu met Misti Momo 💕 And a cute love story began…";
+
+const typeEl = document.getElementById("typeText");
+let ti = 0;
+
+function typeWriter() {
+    if (ti < introText.length) {
+        typeEl.innerHTML += introText.charAt(ti);
+        ti++;
+        setTimeout(typeWriter, 50);
+    }
+}
+
+typeWriter();
+
+    
 /* ending screen */
 #proposalScreen {
     position: fixed;
@@ -47,6 +66,21 @@ html, body {
     z-index: 9;
 }
 
+    .sparkle {
+    position: fixed;
+    pointer-events: none;
+    font-size: 18px;
+    animation: sparkleFade 0.8s linear forwards;
+}
+
+@keyframes sparkleFade {
+    to {
+        transform: translateY(-20px) scale(0.5);
+        opacity: 0;
+    }
+}
+
+    
 /* main layout */
 .container {
     padding: 80px 20px 40px;
@@ -183,7 +217,9 @@ canvas {
 
 <body>
 
-<div id="startScreen">Tipe tipe aamader prem kahini shuru koro Pechiiii 💕</div>
+<div id="startScreen">
+  <span id="typeText"></span>
+</div>
 
 <div id="proposalScreen">
 💍 Jokes Apart Baby — You are my Forever Valentine,and I promise to be with you forever babyyy,   meaaaaaow misti momoooo 💖  
@@ -231,7 +267,7 @@ startScreen.onclick = () => {
     if (started) return; // prevent double tap bug
     started = true;
 
-    music.play();
+    music.play().catch(() => {});
 
     startScreen.style.pointerEvents = "none";
     startScreen.style.opacity = "1";
@@ -351,19 +387,46 @@ const photos=[
 ];
 
 let idx=0;
-function startSlideshow(){
-setInterval(()=>{
+let idx = 0;
 
+function showPhoto(i) {
     slide.classList.add("fade-out");
 
-    setTimeout(()=>{
-        idx=(idx+1)%photos.length;
-        slide.src=photos[idx];
+    setTimeout(() => {
+        idx = (i + photos.length) % photos.length;
+        slide.src = photos[idx];
         slide.classList.remove("fade-out");
-    },400);
-
-},2500);
+    }, 300);
 }
+
+let autoSlide = setInterval(() => {
+    showPhoto(idx + 1);
+}, 3000);
+
+    let startX = 0;
+
+slide.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+});
+
+slide.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+    let diff = endX - startX;
+
+    if (Math.abs(diff) > 40) {
+        clearInterval(autoSlide);
+
+        if (diff < 0) {
+            showPhoto(idx + 1);
+        } else {
+            showPhoto(idx - 1);
+        }
+
+        autoSlide = setInterval(() => {
+            showPhoto(idx + 1);
+        }, 3000);
+    }
+});
 
 
 /* fireworks */
@@ -395,10 +458,23 @@ p=p.filter(a=>a.l>0);
 requestAnimationFrame(anim);
 }
 anim();
+    document.addEventListener("click", e => {
+    for (let i = 0; i < 6; i++) {
+        const s = document.createElement("div");
+        s.className = "sparkle";
+        s.innerHTML = "✨";
+        s.style.left = (e.clientX + Math.random()*20-10) + "px";
+        s.style.top = (e.clientY + Math.random()*20-10) + "px";
+        document.body.appendChild(s);
+        setTimeout(()=>s.remove(),800);
+    }
+});
+
 </script>
 
 </body>
 </html>
+
 
 
 
